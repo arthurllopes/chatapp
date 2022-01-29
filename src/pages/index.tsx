@@ -78,7 +78,7 @@ const Home: NextPage = () => {
       </Head>
       <Container>
         <Header>
-          <Avatar src={user?.photoURL} />
+          <Avatar src={`${user?.photoURL}`} />
           <IconsButton>
             <IconButton>
               <ChatIcon />
