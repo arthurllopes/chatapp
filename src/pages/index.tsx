@@ -10,10 +10,10 @@ import ChatIcon from '@material-ui/icons/Chat'
 import * as EmailValidator from 'email-validator'
 import {useAuthState} from "react-firebase-hooks/auth"
 import {useCollection} from "react-firebase-hooks/firestore"
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { signOut } from "firebase/auth";
 import { auth, db } from '../services/firebase';
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, updateDoc, serverTimestamp, doc } from "firebase/firestore";
 import UserChatBox from '../components/UserChatBox';
 
 
@@ -58,6 +58,17 @@ const Home: NextPage = () => {
       }
     }
   }
+  //Update lastSeen
+  React.useEffect(() => {
+    async function updateLastSeen () {
+      const docRef = doc(db, 'users', `${user?.uid}`)
+      //it does NOT need '{merge: true}' bc im only updating an doc, so it will only subscribe and not create a new one everytime
+      const updateTimestamp = await updateDoc(docRef, {
+        lastSeen: serverTimestamp()
+      });
+    }
+    updateLastSeen()
+  }, [user])
   return (
     <>
       <Head>
@@ -67,13 +78,16 @@ const Home: NextPage = () => {
       </Head>
       <Container>
         <Header>
-          <Avatar src={user?.photoURL} onClick={handleSignOut} />
+          <Avatar src={user?.photoURL} />
           <IconsButton>
             <IconButton>
               <ChatIcon />
             </IconButton>
             <IconButton>
               <MoreVertIcon />
+            </IconButton>
+            <IconButton onClick={handleSignOut}>
+              <ExitToAppIcon />
             </IconButton>
           </IconsButton>
         </Header>

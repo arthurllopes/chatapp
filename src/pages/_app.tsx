@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     if (user) {
-      const docRef = doc(db, 'users', `${user.displayName}`)
+      const docRef = doc(db, 'users', `${user.uid}`)
       setDoc(docRef, 
         {
           email: user.email,

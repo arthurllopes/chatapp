@@ -1,11 +1,10 @@
+import { Container } from './style';
 import Head from 'next/head';
 import React from 'react';
-import { Container } from './style';
 import {Button} from '@material-ui/core';
 import Image from 'next/image';
 import { provider, auth} from '../../services/firebase';
 import {signInWithPopup } from "firebase/auth";
-
 
 type Props = {
     loading: boolean;
