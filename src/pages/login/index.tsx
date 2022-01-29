@@ -2,23 +2,12 @@ import Head from 'next/head';
 import React from 'react';
 import {Button} from '@material-ui/core';
 import Image from 'next/image';
-import { provider, auth} from '../../services/firebase';
+import { provider, auth, signInWithGoogle} from '../../services/firebase';
 import {signInWithPopup } from "firebase/auth";
 import styled from 'styled-components';
 
-type Props = {
-    loading: boolean;
-}
-
-const LoginPage = ({loading}: Props) => {
-    async function signInWithGoogle () {
-        if (auth) {
-            const result = await signInWithPopup(auth, provider)
-            .catch(err => {
-                console.log(err);
-            })
-        }
-    }
+const LoginPage = () => {
+    
   return (
         <Container>
             <Head>
@@ -30,9 +19,7 @@ const LoginPage = ({loading}: Props) => {
             width={144}
             height={144}
             />
-            {loading ? ('Loading...') : (
-                <Button onClick={signInWithGoogle}>SignIn with Google</Button>
-            )}
+            <Button onClick={signInWithGoogle}>SignIn with Google</Button>
         </Container>
     )
 };

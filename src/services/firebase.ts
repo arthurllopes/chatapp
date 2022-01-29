@@ -19,4 +19,13 @@ const auth = getAuth()
 
 const provider = new GoogleAuthProvider()
 
-export {auth, db, provider} 
+async function signInWithGoogle () {
+    if (auth) {
+        const result = await signInWithPopup(auth, provider)
+        .catch(err => {
+            console.log(err);
+        })
+    }
+}
+
+export {auth, db, provider, signInWithGoogle} 

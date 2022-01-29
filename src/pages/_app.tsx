@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [user])
 
-  if(!user) return <LoginPage loading={loading}/>
+  if(!user) return <LoginPage />
   
   return <Component {...pageProps} />
 }
