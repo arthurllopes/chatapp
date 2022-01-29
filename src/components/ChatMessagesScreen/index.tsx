@@ -57,7 +57,7 @@ const Container = styled.div`
     scrollbar-width: none;
 
     padding: 10px;
-    min-height: 70vh;
+    min-height: 75vh;
     background-color: #e5ded8
 `
 

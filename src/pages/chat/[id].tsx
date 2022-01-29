@@ -49,7 +49,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .map(message => (
         {
             ...message,
-            timestamp: message.timestamp.toDate().getTime()
         }
     ))
 
