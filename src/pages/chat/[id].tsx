@@ -1,4 +1,4 @@
-import { ChatScreen, Container, SendMessageArea } from './style';
+import { Container} from './style';
 import Head from 'next/head';
 import React from 'react';
 import ChatHeader from '../../components/ChatHeader';
@@ -16,12 +16,13 @@ type Props = {
     }
 }
 const Chat = ({messages, chat}: Props) => {
+
   return (
         <Container>
             <Head>
                 <title>Chat</title>
             </Head>
-            <ChatHeader recipient={chat.users[1]}/>
+            <ChatHeader chatUsers={chat.users} />
             <ChatMessagesScreen messages={messages} id={chat.id} />
             <SendMessageInput />
         </Container>
@@ -32,32 +33,24 @@ export default Chat;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
-    /* 
-    const userChatRef = query(collection(db, 'chats'), where('users', 'array-contains', user?.email))
-    const querySnapShot = await getDocs(userChatRef)
-    
-    */
-    const messageRef = collection(db, `chats/${context.query.id}/messages`); //COLLECTION REFERENCE
-    //getting the chat which id was given
-    const chatRef = doc(db, 'chats', `${context.query.id}`) //DOCUMENT REFERENCE
-    const chatDoc = await getDoc(chatRef) //DOCUMENT SNAPSHOT
-    //const chatData = chatDoc?.data() //OBJ WITH DATA 'USERS'
+   //getting the chat which id was given
+   const chatRef = doc(db, 'chats', `${context.query.id}`) //DOCUMENT REFERENCE
+   const chatDoc = await getDoc(chatRef) //DOCUMENT SNAPSHOT
 
-    //getting the messages from the chosen chat
-    const messagesRef = collection(chatRef, 'messages') //COLLECTION REFERENCE
+   //getting the messages from the chosen chat
+   const messageRef = collection(db, `chats/${context.query.id}/messages`); //COLLECTION REFERENCE
 
     const messagesQuery = query(messageRef, orderBy("timestamp", "asc")); //QUERY
 
     const messageDoc = await getDocs(messagesQuery) //QUERYSNAPSHOT
 
-    const allMessages = messageDoc?.docs?.map(doc => ({id: doc.id, ...doc.data()}))
-    const allMessagesDocs = messageDoc?.docs
+    const messages = messageDoc?.docs?.map(doc => ({id: doc.id, ...doc.data()}))
 
     //WHENEVER YOU SEND AN TIMESTAMP FROM BACK END TO CLIENT, YOU LOSE YOUR TIMESTAMP
-    const messages = allMessages.map(message => (
+    .map(message => (
         {
             ...message,
-            date: message?.timestamp
+            timestamp: message.timestamp.toDate().getTime()
         }
     ))
 
@@ -70,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             messages: JSON.stringify(messages),
-            chat
+            chat,
         }
     }
 }

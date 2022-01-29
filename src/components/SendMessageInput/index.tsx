@@ -14,6 +14,7 @@ const SendMessageInput = () => {
     const [message, setMessage] = React.useState<string>('')
     const [user] = useAuthState(auth)
     async function handleSubmit (e: React.FormEvent) {
+        window.scrollTo(0, document.body.scrollHeight);
         e.preventDefault();
         if(message.trim().length > 0) {
             const adding = await addDoc(collection(db, `chats/${router.query.id}`, 'messages'), {
@@ -22,7 +23,6 @@ const SendMessageInput = () => {
                 timestamp: serverTimestamp(),
             })
         }
-
         setMessage('');
     }
   return (
@@ -61,9 +61,12 @@ const Container = styled.form`
         padding: 12px;
         margin: 8px 18px;
         border-radius: 22px;
-        border: none;
 
+        outline: 1px solid whitesmoke;
         background-color: whitesmoke;
+        &:focus {
+            outline: none;
+        }
     }
 `
 

@@ -7,6 +7,7 @@ export const Container = styled.header`
     padding: 8px;
     position: sticky;
     top: 0;
+    z-index: 300;
 
     background-color: white;
     border-bottom: 1px solid whitesmoke;

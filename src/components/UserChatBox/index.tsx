@@ -14,7 +14,8 @@ type Props = {
 const ChatBox = ({users, id} : Props) => {
     const router = useRouter()
     const [user] = useAuthState(auth)
-    const userRef = query(collection(db, 'users'), where('email', '==', users[1]))
+    const recipientEmail = users?.filter(userFiltered => userFiltered !== user?.email)[0]
+    const userRef = query(collection(db, 'users'), where('email', '==', recipientEmail))
     const [recipientSnapShot] = useCollection(userRef)
     const recipient = recipientSnapShot?.docs?.[0]
 
@@ -23,8 +24,8 @@ const ChatBox = ({users, id} : Props) => {
     }
   return (
         <Container onClick={handleEnterChat} >
-            <Avatar src={recipient?.data().photoURL}>{users[1][0].toUpperCase()}</Avatar>
-            <p style={{marginLeft: '4px'}}>{users[1]}</p>
+            <Avatar src={recipient?.data().photoURL}>{recipientEmail[0].toUpperCase()}</Avatar>
+            <p style={{marginLeft: '4px'}}>{recipientEmail}</p>
         </Container>
     );
 };

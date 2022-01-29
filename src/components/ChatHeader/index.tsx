@@ -1,24 +1,32 @@
 import { Avatar, IconButton } from '@material-ui/core';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
-import { db } from '../../services/firebase';
+import { auth, db } from '../../services/firebase';
 import { Container } from './style';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import TimeAgo from 'timeago-react'
+
 type Props = {
-    recipient: string
+    chatUsers: string[]
 }
-const ChatHeader = ({recipient}: Props) => {
+const ChatHeader = ({chatUsers}: Props) => {
+    const [user] = useAuthState(auth)
     const [recipientObj, setRecipientObj] = React.useState<any>()
+    const recipientEmail = chatUsers?.filter(userFiltered => userFiltered !== user?.email)[0]
+
     React.useEffect(() => {
-        async function getRecipient() {
-            const userRef = query(collection(db, 'users'), where('email', '==', recipient))
+        const getRecipientDoc = async () => {
+            const userRef = query(collection(db, 'users'), where('email', '==', recipientEmail))
             const recipientSnapShot = await getDocs(userRef)
-            const recipientDoc = recipientSnapShot.docs[0]
+            const recipientDoc = recipientSnapShot.docs?.[0]?.data()
             setRecipientObj(recipientDoc)
-        }
-        getRecipient()
-    }, [recipient])
+        }        
+        getRecipientDoc()
+    }, [recipientEmail])
+    
 
   return (
         <Container>
@@ -30,10 +38,18 @@ const ChatHeader = ({recipient}: Props) => {
                     </Link>
                 </div>
                 <div className="recipient-area">
-                    <Avatar src={recipientObj?.photoURL}>{recipient[0].toUpperCase()}</Avatar>
+                    <Avatar src={recipientObj?.photoURL}>{recipientEmail[0].toUpperCase()}</Avatar>
                     <div className="contact-info">
-                    {recipient}
-                    <p>Last seen</p>
+                        {recipientEmail}
+                    <p style={{fontSize: '.85rem'}}>
+                        {recipientObj?.lastSeen?.toDate() ? (
+                            <>
+                                Last active: <TimeAgo dateTime={recipientObj?.lastSeen?.toDate()} />
+                            </>
+                        ) : (
+                            'Not Available Yet'
+                        )}
+                    </p>
                     </div>
                 </div>
         </Container>
