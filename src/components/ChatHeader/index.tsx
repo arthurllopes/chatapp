@@ -1,11 +1,10 @@
 import { Avatar, IconButton } from '@material-ui/core';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
 import { auth, db } from '../../services/firebase';
 import { Container } from './style';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import TimeAgo from 'timeago-react'
 
@@ -44,7 +43,7 @@ const ChatHeader = ({chatUsers}: Props) => {
                     <p style={{fontSize: '.85rem'}}>
                         {recipientObj?.lastSeen?.toDate() ? (
                             <>
-                                Last active: <TimeAgo dateTime={recipientObj?.lastSeen?.toDate()} />
+                                Last active: <TimeAgo datetime={recipientObj?.lastSeen?.toDate()} />
                             </>
                         ) : (
                             'Not Available Yet'

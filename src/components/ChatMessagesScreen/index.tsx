@@ -41,7 +41,7 @@ const ChatMessagesScreen = ({messages, id}: Props) => {
   return (
         <Container>
             {showMessages()}
-            <div ref={endOfMessage} style={{paddingBottom: '50px'}}></div>
+            <div ref={endOfMessage} style={{paddingBottom: '55px'}}></div>
         </Container>
     );
 };
@@ -57,7 +57,7 @@ const Container = styled.div`
     scrollbar-width: none;
 
     padding: 10px;
-    min-height: 78vh;
+    min-height: 70vh;
     background-color: #e5ded8
 `
 

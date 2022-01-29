@@ -1,4 +1,3 @@
-import { Container} from './style';
 import Head from 'next/head';
 import React from 'react';
 import ChatHeader from '../../components/ChatHeader';
@@ -18,14 +17,14 @@ type Props = {
 const Chat = ({messages, chat}: Props) => {
 
   return (
-        <Container>
+        <>
             <Head>
                 <title>Chat</title>
             </Head>
             <ChatHeader chatUsers={chat.users} />
             <ChatMessagesScreen messages={messages} id={chat.id} />
             <SendMessageInput />
-        </Container>
+        </>
     );     
 };
 

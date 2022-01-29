@@ -53,7 +53,7 @@ const Container = styled.form`
     position: sticky;
     bottom: 0;
     z-index: 200;
-    padding: .75rem 2rem;
+    padding: .75rem 3rem;
 
 
     input {
@@ -62,7 +62,8 @@ const Container = styled.form`
         margin: 8px 18px;
         border-radius: 22px;
 
-        outline: 1px solid whitesmoke;
+        border: solid 1px black;
+        outline: none;
         background-color: whitesmoke;
         &:focus {
             outline: none;
