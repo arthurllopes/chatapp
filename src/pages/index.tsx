@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import '../services/firebase'
 import React from 'react';
-import { Container, Header, IconsButton, SearchArea } from './style'
 import {Avatar, IconButton, Button} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -15,6 +14,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from '../services/firebase';
 import { collection, addDoc, getDocs, query, where, updateDoc, serverTimestamp, doc } from "firebase/firestore";
 import UserChatBox from '../components/UserChatBox';
+import styled from 'styled-components';
 
 
 const Home: NextPage = () => {
@@ -105,5 +105,45 @@ const Home: NextPage = () => {
     </>
   )
 }
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+    .btn {
+        width: 100%;
+        border-top: 1px solid whitesmoke;
+        border-bottom: 1px solid whitesmoke;
+    }
+`
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    padding: 15px;
+    height: 80px;
+    border-bottom: 1px solid whitesmoke;
+`
+const IconsButton = styled.div`
+    display: flex;
+    align-items: center;
+`
+const SearchArea = styled.div`
+    display: flex;
+    align-items: center;
+
+    padding: 20px 10px;
+    border-radius: 4px;
+
+    input {
+        border: none;
+        outline-width: 0;
+        flex: 1;
+    }
+`
 
 export default Home
