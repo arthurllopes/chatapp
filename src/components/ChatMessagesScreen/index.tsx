@@ -32,11 +32,12 @@ const ChatMessagesScreen = ({messages, id}: Props) => {
         }
     }
     const endOfMessage = React.useRef<HTMLDivElement>(null)
+    const currentRef = endOfMessage.current
     React.useEffect(() => {
-        if(endOfMessage.current) {
-            endOfMessage.current?.scrollIntoView()
+        if(currentRef) {
+            currentRef.scrollIntoView()
         }
-    }, [endOfMessage.current])
+    }, [currentRef])
 
   return (
         <Container>
