@@ -12,10 +12,12 @@ type Props = {
 
 const LoginPage = ({loading}: Props) => {
     async function signInWithGoogle () {
-        const result = await signInWithPopup(auth, provider)
-        .catch(err => {
-            console.log(err);
-        })
+        if (auth) {
+            const result = await signInWithPopup(auth, provider)
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
   return (
         <Container>
