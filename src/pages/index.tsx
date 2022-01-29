@@ -38,9 +38,9 @@ const Home: NextPage = () => {
 
       //getting each docs to find a chat tht...
       return (
-          !!querySnapShot?.docs.find(chat => (
+          !!querySnapShot?.docs?.find(chat => (
           //... inside its data on prop 'users', trying to find in each user if the email is equal to the given email
-          chat.data().users?.find(user => user.email === email)?.length > 0
+          chat.data().users?.find((userFiltered: { email: string; }) => userFiltered.email === email)?.length > 0
         ))
       )
     //its returning true or false
